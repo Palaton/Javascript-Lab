@@ -183,7 +183,7 @@
     });
     uploader.bind('fileuploaddestroy', function(e, data) {
         var image = data;
-        $(data.content).remove();
+        $(data.context).remove();
     });
 </script>
 </body>
