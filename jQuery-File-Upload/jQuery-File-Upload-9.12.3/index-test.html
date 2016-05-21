@@ -65,7 +65,6 @@
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
-        <td>begin upload image: {%=i%}</td>
         <td>
             <span class="preview"></span>
         </td>
@@ -98,13 +97,9 @@
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
-        <td>uploaded image : {%=i%}</td>
         <td>
             <span class="preview">
-                <!-- {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %} -->
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" target="_blank" data-gallery><img src="http://180.166.212.58:8011/salesweb/image/{%=file.id%}/100_150.jpg"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}" download="http://180.166.212.58:8011/salesweb/image/{%=file.id%}/100_150.jpg" target="_blank" data-gallery><img src="http://180.166.212.58:8011/salesweb/image/{%=file.id%}/100_150.jpg"></a>
             </span>
         </td>
         <td>
@@ -153,7 +148,7 @@
 <script src="js/jquery.fileupload-image.js"></script>
 <script src="js/jquery.fileupload-ui.js"></script>
 <script>
-    var uploader=$("#fileupload").fileupload({
+    $("#fileupload").fileupload({
         fileInput :$("#fileupload_A"),
         dataType: 'json',
         autoUpload: false,
@@ -164,24 +159,23 @@
         uploadTemplateId: "template-upload",
         downloadTemplateId: 'template-download',
         filesContainer:$("#picContainer")
-    });
-    uploader.bind('fileuploaddone', function(e, data) {
+    }).bind('fileuploadadded', function (e, data) {
+
+    }).bind('fileuploadadd', function (e, data) {
+
+    }).bind('fileuploaddone', function(e, data) {
         var image = data.result.files[0];
         // alert(json.userdata.id);
         //alert(image.id);
-    });
-    uploader.bind('fileuploadfailed', function(e, data) {
+    }).bind('fileuploadfailed', function(e, data) {
         //eva.p(data);
-    });
-    uploader.bind('fileuploadadded', function(e, data) {
+    }).bind('fileuploadadded', function(e, data) {
         if (!data.files.valid) {
             //alert(data.files[0].name)
         }
-    });
-    uploader.bind('fileuploadchange', function(e, data) {
+    }).bind('fileuploadchange', function(e, data) {
         //uploader.find('.files').empty();
-    });
-    uploader.bind('fileuploaddestroy', function(e, data) {
+    }).bind('fileuploaddestroy', function(e, data) {
         var image = data;
         $(data.context).remove();
     });
