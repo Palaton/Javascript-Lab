@@ -65,7 +65,7 @@
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
-        <td>begin upload image{%=i%}: </td>
+        <td>begin upload image: {%=i%}</td>
         <td>
             <span class="preview"></span>
         </td>
@@ -98,13 +98,13 @@
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
-        <td>uploaded image {%=i%}: </td>
+        <td>uploaded image : {%=i%}</td>
         <td>
             <span class="preview">
                 <!-- {% if (file.thumbnailUrl) { %}
                     <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
                 {% } %} -->
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" target="_blank" data-gallery><img src="http://180.166.212.58:8011/salesweb/image/{%=file.id%}/300_250.jpg"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" target="_blank" data-gallery><img src="http://180.166.212.58:8011/salesweb/image/{%=file.id%}/100_150.jpg"></a>
             </span>
         </td>
         <td>
@@ -124,7 +124,7 @@
         </td>
         <td>
             {% if (file.delete_url) { %}
-                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.delete_url%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                <button class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>Delete</span>
                 </button>
@@ -140,7 +140,7 @@
 {% } %}
 </script>
 <hr>
-<div id="picContainer" class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></div>
+<div id="picContainer" class="files"></div>
 <hr>
 
 <script src="js/jquery-1.10.2.min.js"></script>
@@ -167,20 +167,23 @@
     });
     uploader.bind('fileuploaddone', function(e, data) {
         var image = data.result.files[0];
-        /* alert(json.userdata.fileRealName);
-        alert(json.userdata.id); */
-        alert(image.id);
+        // alert(json.userdata.id);
+        //alert(image.id);
     });
     uploader.bind('fileuploadfailed', function(e, data) {
         //eva.p(data);
     });
     uploader.bind('fileuploadadded', function(e, data) {
         if (!data.files.valid) {
-            alert(data.files[0].name)
+            //alert(data.files[0].name)
         }
     });
     uploader.bind('fileuploadchange', function(e, data) {
         //uploader.find('.files').empty();
+    });
+    uploader.bind('fileuploaddestroy', function(e, data) {
+        var image = data;
+        $(data.content).remove();
     });
 </script>
 </body>
