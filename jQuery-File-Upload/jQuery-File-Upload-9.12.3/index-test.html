@@ -178,6 +178,8 @@
     }).bind('fileuploaddestroy', function(e, data) {
         var image = data;
         $(data.context).remove();
+    }).bind('fileuploadfail', function (e, data) {
+    	
     });
 </script>
 </body>
