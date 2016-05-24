@@ -7,11 +7,12 @@
 <!-- Bootstrap styles -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- Generic page styles -->
-<link rel="stylesheet" href="css/style.css">
+<!-- <link rel="stylesheet" href="css/style.css"> -->
 <link rel="stylesheet" href="css/jquery.fileupload.css">
 <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
 </head>
 <body>
+<br>
 <div class="container">
     <form id="fileupload" action="http://filesvr.centaline.com:8081/aist-filesvr-web/servlet/jqueryFileUpload" method="POST" enctype="multipart/form-data">
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
@@ -24,7 +25,7 @@
                     <input type="file" 
                     id="fileupload_A" 
                     name="files[]" 
-                    data-url="http://filesvr.centaline.com:8081/aist-filesvr-web/servlet/jqueryFileUpload" 
+
                     data-sequential-uploads="true"
                     multiple 
                     accept="image/png,image/gif,image/jpg,image/jpeg">
@@ -135,8 +136,9 @@
 {% } %}
 </script>
 <hr>
-<div id="picContainer" class="files"></div>
+<div id="picContainer"></div>
 <hr>
+<button onclick="return test();">test</button>
 
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/vendor/jquery.ui.widget.js"></script>
@@ -148,7 +150,8 @@
 <script src="js/jquery.fileupload-image.js"></script>
 <script src="js/jquery.fileupload-ui.js"></script>
 <script>
-    $("#fileupload").fileupload({
+    var datas=[];
+    var fileupload=$("#fileupload").fileupload({
         fileInput :$("#fileupload_A"),
         dataType: 'json',
         autoUpload: false,
@@ -160,7 +163,7 @@
         downloadTemplateId: 'template-download',
         filesContainer:$("#picContainer")
     }).bind('fileuploadadded', function (e, data) {
-
+        datas.push(data);
     }).bind('fileuploadadd', function (e, data) {
 
     }).bind('fileuploaddone', function(e, data) {
@@ -181,6 +184,12 @@
     }).bind('fileuploadfail', function (e, data) {
     	
     });
+
+    function test(){    
+        $.each(datas,function(index,data){
+            data.abort();
+        });
+    }
 </script>
 </body>
 </html>
