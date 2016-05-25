@@ -149,40 +149,40 @@
 <script src="js/jquery.fileupload-process.js"></script>
 <script src="js/jquery.fileupload-image.js"></script>
 <script src="js/jquery.fileupload-ui.js"></script>
+<script src="js/jquery.fileupload-validate.js"></script>
 <script>
     var datas=[];
     var fileupload=$("#fileupload").fileupload({
         fileInput :$("#fileupload_A"),
         dataType: 'json',
         autoUpload: false,
-        acceptFileTypes:  /(\.|\/)(gif|jpe?g|png)$/i,
+        //acceptFileTypes:  /(\.|\/)(gif|jpe?g|png)$/i,
         maxFileSize: 5000000,
-        maxNumberOfFiles : 10,
+        maxNumberOfFiles : 1,
         sequentialUploads:true,
         uploadTemplateId: "template-upload",
-        downloadTemplateId: 'template-download',
-        filesContainer:$("#picContainer")
-    }).bind('fileuploadadded', function (e, data) {
-        datas.push(data);
-    }).bind('fileuploadadd', function (e, data) {
-
+        downloadTemplateId: "template-download",
+        filesContainer:$("#picContainer"),
+        disableValidation:false,
+        getNumberOfFiles:function(){
+            return this.filesContainer.children().not('.processing').length
+        }
     }).bind('fileuploaddone', function(e, data) {
         var image = data.result.files[0];
-        // alert(json.userdata.id);
-        //alert(image.id);
-    }).bind('fileuploadfailed', function(e, data) {
-        //eva.p(data);
+    }).bind('fileuploadadd', function(e, data) {
+        datas.push(data);
     }).bind('fileuploadadded', function(e, data) {
-        if (!data.files.valid) {
-            //alert(data.files[0].name)
+        var file=data.files[0];
+        if(data.files.error = true)
+        {
+            alert(file.error);
         }
-    }).bind('fileuploadchange', function(e, data) {
-        //uploader.find('.files').empty();
+        
     }).bind('fileuploaddestroy', function(e, data) {
         var image = data;
         $(data.context).remove();
     }).bind('fileuploadfail', function (e, data) {
-    	
+        //alert(data.files[0].name);
     });
 
     function test(){    
